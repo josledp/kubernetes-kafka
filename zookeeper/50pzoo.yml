@@ -10,7 +10,7 @@ spec:
       app: zookeeper
       storage: persistent
   serviceName: "pzoo"
-  replicas: 3
+  replicas: 1
   updateStrategy:
     type: OnDelete
   template:
@@ -65,12 +65,6 @@ spec:
       - name: config
         configMap:
           name: zookeeper-config
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: kafka-zookeeper
-      resources:
-        requests:
-          storage: 1Gi
+      volumes:
+      - name: data
+        emptyDir: {}
