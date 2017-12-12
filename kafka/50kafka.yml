@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: kafka
   serviceName: "broker"
-  replicas: 3
+  replicas: 1
   updateStrategy:
     type: OnDelete
   template:
@@ -78,12 +78,5 @@ spec:
       - name: config
         configMap:
           name: broker-config
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: kafka-broker
-      resources:
-        requests:
-          storage: 10Gi
+      - name: data
+        emptyDir: {}
