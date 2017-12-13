@@ -4,7 +4,6 @@ metadata:
   name: pzoo
   namespace: kafka
 spec:
-spec:
   selector:
     matchLabels:
       app: zookeeper
@@ -12,7 +11,7 @@ spec:
   serviceName: "pzoo"
   replicas: 3
   updateStrategy:
-    type: OnDelete
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -20,6 +19,16 @@ spec:
         storage: persistent
       annotations:
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - zookeeper
+              topologyKey: "kubernetes.io/hostname"
       terminationGracePeriodSeconds: 10
       initContainers:
       - name: init-config

@@ -11,13 +11,23 @@ spec:
   serviceName: "broker"
   replicas: 3
   updateStrategy:
-    type: OnDelete
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: kafka
       annotations:
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - kafka
+              topologyKey: "kubernetes.io/hostname"
       terminationGracePeriodSeconds: 30
       initContainers:
       - name: init-config
