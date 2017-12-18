@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: kafka
   serviceName: "broker"
-  replicas: 3
+  replicas: 5
   updateStrategy:
     type: RollingUpdate
   template:
