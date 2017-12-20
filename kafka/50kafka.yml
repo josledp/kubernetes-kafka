@@ -57,6 +57,8 @@ spec:
           value: -Dlog4j.configuration=file:/etc/kafka/log4j.properties
         - name: JMX_PORT
           value: "5555"
+        - name: KAFKA_HEAP_OPTS
+          value: "-Xmx4G -Xms4G"
         ports:
         - name: inside
           containerPort: 9092
